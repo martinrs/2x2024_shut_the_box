@@ -7,15 +7,17 @@ class GameController:
     def __init__(self,size):
         self.score=0
         self.game_running=True
-        self.bræt=Bræt(size)
-    def flip(self,inputlist):
+        self.bræt=Model.Bræt(size)
+
+    def flip(self, inputlist):
         allmoveslegal=True
         for e in inputlist:
             if not self.checkMove(e):
                 allmoveslegal=False
         if allmoveslegal:
             for e in inputlist:
-                self.bræt.brikker[e].flip(e)
+                self.bræt.brikker[e].flip()
+        return allmoveslegal
     def checkMove(self,num):
         if not num in self.bræt.brikker:
             return False

@@ -5,10 +5,8 @@ import GameController
 # Number of bricks selector
 class ShutTheBox:
     def __init__(self):
-        print("Innit")
-
-    def GameController(GC):
-        print("GC")
+        mode = self.intro()
+        self.gc = GameController.GameController(mode)
 
     def intro(self):
         print("Intro")
@@ -30,5 +28,38 @@ class ShutTheBox:
                 print("Please choose either 9 or 12")  # Error handling
 
         print(Choice, "mode picked.")
+        return Choice
 
- # https://docs.google.com/document/d/1gSRzIXMDmgNAJoKjsw4HnSXA8wjWLx3KdBaUJf6oThw/edit , Intro segment
+    def render(self):
+        print('Du har slået:\n{} og {}'.format(self.gc.bræt.raflebæger.terninger[0], self.gc.bræt.raflebæger.terninger[1]))
+        out = '|'
+        for nummer in self.gc.bræt.brikker:
+            brik = self.gc.bræt.brikker[nummer]
+            if brik.shut:
+                out += ' X |'
+            else:
+                out += ' {} |'.format(nummer)
+        print(out)
+    def run(self):
+        self.render()
+        running = True
+        while running:
+            # input
+            flipList = input('Hvilke brikker skal lukkes?\nAdskil med komma\n').split(',')
+            for i in range(len(flipList)):
+                flipList[i] = int(flipList[i])
+            # update
+            succes = self.gc.flip(flipList)
+            if not succes:
+                print('Du kan ikke flippe den kombination')
+            else:
+                self.gc.bræt.raflebæger.rul()
+            # render
+            self.render()
+
+
+# https://docs.google.com/document/d/1gSRzIXMDmgNAJoKjsw4HnSXA8wjWLx3KdBaUJf6oThw/edit , Intro segment
+
+if __name__ == "__main__":
+     game = ShutTheBox()
+     game.run()

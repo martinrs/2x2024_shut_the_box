@@ -67,8 +67,12 @@ class Bræt():
     def __init__(self, size):
         self.brikker = {}
         for i in range(1,size+1,1):
-            self.brikker = Brik(i)
+            self.brikker[i] = Brik(i)
         print(self.brikker)
+        self.raflebæger = Raflebæger()
+        self.raflebæger.tilføj_terning(6)
+        self.raflebæger.tilføj_terning(6)
+        self.raflebæger.rul()
 
 if __name__ == "__main__":
     r = Raflebæger()
