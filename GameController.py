@@ -13,11 +13,12 @@ class GameController:
         allmoveslegal=True
         for e in inputlist:
             if not self.checkMove(e):
-                allmoveslegal=False
-        if allmoveslegal:
+                allmoveslegal = False
+        sumlegal = self.checkSum(inputlist)
+        if allmoveslegal and sumlegal:
             for e in inputlist:
                 self.bræt.brikker[e].flip()
-        return allmoveslegal
+        return allmoveslegal and sumlegal
     def checkMove(self,num):
         if not num in self.bræt.brikker:
             return False
@@ -25,7 +26,11 @@ class GameController:
             return False
         return True
 
-def checkSum():
-    sum = 0
-    for terning in bræt.Raflebaeger.terninger:
-        sum += terning.senesteSlag
+    def checkSum(self, inputlist):
+        terningsum = 0
+        for terning in self.bræt.raflebæger.terninger:
+            terningsum += terning.senesteSlag()
+        inputsum = 0
+        for num in inputlist:
+            inputsum += num
+        return terningsum == inputsum
